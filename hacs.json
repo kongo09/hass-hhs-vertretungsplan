@@ -1,0 +1,6 @@
+{
+    "name": "HHS Vertretungsplan",
+    "iot_class": "Cloud Polling",
+    "domains": ["binary_sensor"],
+    "render_readme": true
+}

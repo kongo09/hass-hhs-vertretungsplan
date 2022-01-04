@@ -1,0 +1,18 @@
+{
+  "title": "HHS Vertretungsplan",
+  "config": {
+    "step": {
+      "user": {
+        "title": "HHS Vertretungsplan",
+        "data": {
+          "tutor_group": "Tutor group",
+          "user": "User name",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "authentication": "Account data is wrong"
+    }
+  }
+}
