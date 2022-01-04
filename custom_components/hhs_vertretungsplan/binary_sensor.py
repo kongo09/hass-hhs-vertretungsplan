@@ -19,8 +19,7 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry, async_a
     entities = []
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
-    vertretungsStatus = VertretungsStatus(coordinator)
-    vertretungsStatus.setConfig(entry)
+    vertretungsStatus = VertretungsStatus(coordinator, entry)
     entities.append(vertretungsStatus)
     
     async_add_entities(entities, update_before_add=True)
@@ -30,15 +29,11 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry, async_a
 class VertretungsStatus(HHSVertretungsEntity, BinarySensorEntity):
     """Representation of the Vertretung."""
 
-    def __init__(self, coordinator: HHSDataUpdateCoordinator):
+    def __init__(self, coordinator: HHSDataUpdateCoordinator, config: ConfigEntry):
         super().__init__(coordinator)
         self._attr_unique_id = None
-        self._attr_name = DEFAULT_NAME + " " + self._modelName
         self._attr_state_class = "measurement"
         self._attr_entity_category = "diagnostic"
-        self._config = None
-
-    def setConfig(self, config: ConfigEntry) -> None:
         self._config = config
         self._tutor_group = self._config.data[CONF_TUTOR_GROUP]
         self._attr_name = self._config.data[CONF_TUTOR_GROUP]
