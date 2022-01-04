@@ -79,9 +79,12 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
 
         """Let's return the raw list of all Vertretungen."""
         vertretungen = self.hhs.vertretungen
-        klassenliste = {str, []}
+        klassenliste = {}
         for vertretung in vertretungen:
-            klassenliste[vertretung.klasse].append(vertretung)
+            if vertretung.klasse in klassenliste:
+                klassenliste[vertretung.klasse].append(vertretung)
+            else:
+                klassenliste[vertretung.klasse] = [vertretung]
         return klassenliste
 
 
