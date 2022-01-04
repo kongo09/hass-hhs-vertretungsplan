@@ -33,9 +33,9 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     def _get_schema(self, user_input):
         """Provide schema for user input."""
         schema = vol.Schema({
-            vol.Required(CONF_TUTOR_GROUP, default=user_input[CONF_TUTOR_GROUP]): cv.string,
-            vol.Required(CONF_USER, default=user_input[CONF_USER]): cv.string,
-            vol.Required(CONF_PASS, default=user_input[CONF_PASS]): cv.string
+            vol.Required(CONF_TUTOR_GROUP, default=user_input.get(CONF_TUTOR_GROUP, '')): cv.string,
+            vol.Required(CONF_USER, default=user_input.get(CONF_USER, '')): cv.string,
+            vol.Required(CONF_PASS, default=user_input.get(CONF_PASS, '')): cv.string
         })
         return schema
 
