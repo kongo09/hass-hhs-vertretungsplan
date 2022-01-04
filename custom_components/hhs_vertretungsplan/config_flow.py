@@ -5,7 +5,7 @@ from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from hhs_vertretungsplan_parser.vertretungsplan_parser import HHSVertrungsplanParser, AuthenticationException
+from hhs_vertretungsplan_parser.vertretungsplan_parser import HHSVertretungsplanParser, AuthenticationException
 
 from aiohttp.client_exceptions import ClientConnectorError
 
