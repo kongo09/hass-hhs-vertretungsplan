@@ -96,5 +96,5 @@ class VertretungsStatus(HHSVertretungsEntity, BinarySensorEntity):
         }
         num = len(vertretungen)
         if (num >=1):
-            extra_state = vertretungen[1]
+            extra_state = vertretungen[0]
         return extra_state
