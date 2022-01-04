@@ -24,7 +24,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # setup the parser
     session = async_get_clientsession(hass)
     user = entry.data[CONF_USER]
-    password = entry.data[CONF_PASSWORD]
+    password = entry.data[CONF_PASS]
     hhs = HHSVertretungsplanParser(session, user, password)
     await hhs.load_data()
 

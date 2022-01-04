@@ -2,6 +2,10 @@ DOMAIN = "hhs_vertretungsplan"
 PLATFORMS = ["binary_sensor"]
 DATA_CONFIG_ENTRY = "config_entry"
 
+CONF_TUTOR_GROUP = "tutor_group"
+CONF_USER = "user"
+CONF_PASS = "password"
+
 # set polling interval to 10mins
 POLLING_INTERVAL = 1200
 

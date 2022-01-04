@@ -14,7 +14,7 @@ from typing import Any
 import logging
 import voluptuous as vol
 
-from .const import CONF_PASSWORD, CONF_TUTOR_GROUP, CONF_USER, DOMAIN
+from .const import CONF_PASS, CONF_TUTOR_GROUP, CONF_USER, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -35,7 +35,7 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         schema = vol.Schema({
             vol.Required(CONF_TUTOR_GROUP, default=""): cv.string,
             vol.Required(CONF_USER, default=""): cv.string,
-            vol.Required(CONF_PASSWORD, default=""): cv.string
+            vol.Required(CONF_PASS, default=""): cv.string
         })
         return schema
 
@@ -52,7 +52,7 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 session = async_get_clientsession(self.hass)
                 user = user_input[CONF_USER]
                 password = user_input[CONF_PASSWORD]
-                self.hhs = HHSVertrungsplanParser(session, user, password)
+                self.hhs = HHSVertretungsplanParser(session, user, password)
 
                 # try to load some data
                 await self.hhs.load_data()
@@ -71,7 +71,7 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
 
             except (ConnectionError, ClientConnectorError, AuthenticationException) as e:
-                errors[CONF_PASSWORD] = "authentication"
+                errors[CONF_PASS] = "authentication"
                 errors[CONF_USER] = "authentication"
 
         # no user_input so far
