@@ -94,7 +94,7 @@ class VertretungsStatus(HHSVertretungsEntity, BinarySensorEntity):
             ATTR_NACH: "",
             ATTR_TEXT: ""
         }
-        num = vertretungen.count()
+        num = len(vertretungen)
         if (num >=1):
             extra_state = vertretungen[1]
         return extra_state
