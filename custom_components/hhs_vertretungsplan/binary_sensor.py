@@ -1,7 +1,8 @@
 from typing import Callable, Any, Dict
-from custom_components.hhs_vertretungsplan import HHSDataUpdateCoordinator, HHSVertretungsEntity
+from custom_components.hhs_vertretungsplan import HHSDataUpdateCoordinator
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.helpers.typing import HomeAssistantType
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.config_entries import ConfigEntry
 
 import logging
@@ -26,12 +27,33 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry, async_a
     return True
 
 
+class HHSVertretungsEntity(CoordinatorEntity):
+
+    def __init__(self, coordinator: HHSDataUpdateCoordinator):
+        super().__init__(coordinator)
+        self._available = True
+
+    @property
+    def device_info(self):
+        return {
+            "identifiers": {
+                (DOMAIN, DEFAULT_NAME)
+            },
+            "name": DEFAULT_NAME,
+            "manufacturer": "HHS",
+        }
+
+    @property
+    def available(self) -> bool:
+        """Return True if entity is available."""
+        return self._available
+
+
 class VertretungsStatus(HHSVertretungsEntity, BinarySensorEntity):
     """Representation of the Vertretung."""
 
     def __init__(self, coordinator: HHSDataUpdateCoordinator, config: ConfigEntry):
         super().__init__(coordinator)
-        self._attr_unique_id = None
         self._attr_state_class = "measurement"
         self._attr_entity_category = "diagnostic"
         self._config = config
@@ -55,7 +77,7 @@ class VertretungsStatus(HHSVertretungsEntity, BinarySensorEntity):
     def icon(self) -> str:
         """Return icon depending on state."""
         if self.is_on:
-            return "mdi:checkbox-bell-circle-outline"
+            return "mdi:checkbox-blank-circle-outline"
         else:
             return "mdi:bell-circle"
 

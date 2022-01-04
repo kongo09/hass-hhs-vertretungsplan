@@ -11,7 +11,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, CoordinatorEntity, UpdateFailed
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 import logging
 
@@ -86,25 +86,3 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
             else:
                 klassenliste[vertretung.klasse] = [vertretung]
         return klassenliste
-
-
-class HHSVertretungsEntity(CoordinatorEntity):
-
-    def __init__(self, coordinator: HHSDataUpdateCoordinator):
-        super().__init__(coordinator)
-        self._available = True
-
-    @property
-    def device_info(self):
-        return {
-            "identifiers": {
-                (DOMAIN, DEFAULT_NAME)
-            },
-            "name": DEFAULT_NAME,
-            "manufacturer": "HHS",
-        }
-
-    @property
-    def available(self) -> bool:
-        """Return True if entity is available."""
-        return self._available
