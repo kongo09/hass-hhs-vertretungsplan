@@ -14,7 +14,7 @@ from typing import Any
 import logging
 import voluptuous as vol
 
-from .const import CONF_PASS, CONF_TUTOR_GROUP, CONF_USER, DOMAIN
+from .const import CONF_PASS, CONF_TUTOR_GROUP, CONF_USER, DEFAULT_NAME, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -66,7 +66,7 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
                 # compile a name from model and serial
                 return self.async_create_entry(
-                    title=unique_id,
+                    # title='',
                     data=user_input
                 )
 
