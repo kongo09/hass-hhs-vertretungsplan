@@ -27,15 +27,15 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     def __init__(self) -> None:
         """Initialize."""
-        self.hhs: HHSVertrungsplanParser = None
+        self.hhs: HHSVertretungsplanParser = None
 
 
     def _get_schema(self, user_input):
         """Provide schema for user input."""
         schema = vol.Schema({
-            vol.Required(CONF_TUTOR_GROUP, default=""): cv.string,
-            vol.Required(CONF_USER, default=""): cv.string,
-            vol.Required(CONF_PASS, default=""): cv.string
+            vol.Required(CONF_TUTOR_GROUP, default=user_input[CONF_TUTOR_GROUP]): cv.string,
+            vol.Required(CONF_USER, default=user_input[CONF_USER]): cv.string,
+            vol.Required(CONF_PASS, default=user_input[CONF_PASS]): cv.string
         })
         return schema
 
@@ -71,8 +71,10 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
 
             except (ConnectionError, ClientConnectorError, AuthenticationException) as e:
-                errors[CONF_PASS] = "authentication"
-                errors[CONF_USER] = "authentication"
+                errors['base'] = "authentication"
+
+        if user_input is None:
+            user_input = {}
 
         # no user_input so far
         # what to ask the user
