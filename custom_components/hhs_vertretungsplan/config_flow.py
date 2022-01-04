@@ -51,7 +51,7 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 # let's try and connect to HHS
                 session = async_get_clientsession(self.hass)
                 user = user_input[CONF_USER]
-                password = user_input[CONF_PASSWORD]
+                password = user_input[CONF_PASS]
                 self.hhs = HHSVertretungsplanParser(session, user, password)
 
                 # try to load some data
