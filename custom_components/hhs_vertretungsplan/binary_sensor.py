@@ -1,5 +1,7 @@
 from typing import Callable, Any, Dict
 from custom_components.hhs_vertretungsplan import HHSDataUpdateCoordinator
+from dataclasses import asdict
+
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.helpers.typing import HomeAssistantType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -96,5 +98,5 @@ class VertretungsStatus(HHSVertretungsEntity, BinarySensorEntity):
         }
         num = len(vertretungen)
         if (num >=1):
-            extra_state = vertretungen[0]
+            extra_state = asdict(vertretungen[0])
         return extra_state
