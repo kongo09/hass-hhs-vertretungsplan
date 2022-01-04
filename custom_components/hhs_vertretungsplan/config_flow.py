@@ -66,7 +66,7 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
                 # compile a name from model and serial
                 return self.async_create_entry(
-                    # title='',
+                    title='',
                     data=user_input
                 )
 
