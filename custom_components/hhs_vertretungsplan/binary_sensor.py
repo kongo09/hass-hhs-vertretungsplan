@@ -66,9 +66,9 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
     def icon(self) -> str:
         """Return icon depending on state."""
         if self.is_on:
-            return "mdi:checkbox-blank-circle-outline"
-        else:
             return "mdi:bell-circle"
+        else:
+            return "mdi:checkbox-blank-circle-outline"
 
     @property
     def extra_state_attributes(self) -> Dict[str, Any]:
