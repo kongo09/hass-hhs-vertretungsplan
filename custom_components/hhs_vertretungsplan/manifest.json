@@ -4,7 +4,7 @@
   "documentation": "https://github.com/kongo09/hass-hhs-vertretungsplan",
   "issue_tracker": "https://github.com/kongo09/hass-hhs-vertretungsplan/issues",
   "codeowners": ["@kongo09"],
-  "requirements": ["hhs-vertretungsplan-parser==0.0.2"],
+  "requirements": ["hhs-vertretungsplan-parser==0.0.3"],
   "dependencies": [],
   "iot_class": "cloud_polling",
   "config_flow": true,
