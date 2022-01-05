@@ -2,6 +2,7 @@
 from __future__ import annotations
 from typing import Dict
 from datetime import timedelta
+from dataclasses import asdict
 
 from hhs_vertretungsplan_parser.vertretungsplan_parser import AuthenticationException, HHSVertretungsplanParser
 
@@ -82,7 +83,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         klassenliste = {}
         for vertretung in vertretungen:
             if vertretung.klasse in klassenliste:
-                klassenliste[vertretung.klasse].append(vertretung)
+                klassenliste[vertretung.klasse].append(asdict(vertretung))
             else:
-                klassenliste[vertretung.klasse] = [vertretung]
+                klassenliste[vertretung.klasse] = [asdict(vertretung)]
         return klassenliste
