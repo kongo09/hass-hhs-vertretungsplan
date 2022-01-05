@@ -1,7 +1,7 @@
 """The HHS Vertretungsplan component."""
 from __future__ import annotations
 from typing import Dict
-from datetime import timedelta
+from datetime import datetime, timedelta
 from dataclasses import asdict
 
 from hhs_vertretungsplan_parser.vertretungsplan_parser import AuthenticationException, HHSVertretungsplanParser
@@ -93,5 +93,11 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         """Make the date better readable and combine Text and Nach fields."""
         for klasse in klassenliste.keys():
             for vertretung in klassenliste[klasse]:
-                vertretung['datum'] = "xxx"
+                vertretung['datum'] = datetime.datetime.strptime(vertretung['datum'], '%Y-%m-%d').strftime('%A, %-d. %b')
+                if len(vertretung['text']) > 0:
+                    if len(vertretung['nach'] > 0):
+                        vertretung['text'] = ', '.join(vertretung['text'], vertretung['nach'])
+                else:
+                    vertretung['text'] = vertretung['nach']
+                    
         return klassenliste
