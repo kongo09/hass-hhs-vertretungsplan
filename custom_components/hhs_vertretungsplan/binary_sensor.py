@@ -22,46 +22,33 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry, async_a
     entities = []
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
-    vertretungsStatus = VertretungsStatus(coordinator, entry)
-    entities.append(vertretungsStatus)
+    entities.append(VertretungsStatus(coordinator, entry))
     
     async_add_entities(entities, update_before_add=True)
     return True
 
 
-class HHSVertretungsEntity(CoordinatorEntity):
-
-    def __init__(self, coordinator: HHSDataUpdateCoordinator):
-        super().__init__(coordinator)
-        self._available = True
-
-    @property
-    def device_info(self):
-        return {
-            "identifiers": {
-                (DOMAIN, DEFAULT_NAME)
-            },
-            "name": DEFAULT_NAME,
-            "manufacturer": "HHS",
-        }
-
-    @property
-    def available(self) -> bool:
-        """Return True if entity is available."""
-        return self._available
-
-
-class VertretungsStatus(HHSVertretungsEntity, BinarySensorEntity):
+class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
     """Representation of the Vertretung."""
 
     def __init__(self, coordinator: HHSDataUpdateCoordinator, config: ConfigEntry):
         super().__init__(coordinator)
-        self._attr_state_class = "measurement"
-        self._attr_entity_category = "diagnostic"
+
+        # internal
+        self._available = True
         self._config = config
         self._tutor_group = self._config.data[CONF_TUTOR_GROUP]
-        self._attr_name = self._config.data[CONF_TUTOR_GROUP]
-        self._attr_unique_id = self._attr_name
+
+        # attributes
+        self._attr_state_class = "measurement"
+        self._attr_entity_category = "diagnostic"
+        self._attr_name = PREFIX + " " + self._config.data[CONF_TUTOR_GROUP]
+        self._attr_unique_id = hash(self._attr_name)
+    
+    @property
+    def available(self) -> bool:
+        """Return True if entity is available."""
+        return self._available
 
     @property
     def is_on(self) -> bool:

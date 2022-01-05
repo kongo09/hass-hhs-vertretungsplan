@@ -11,6 +11,7 @@ POLLING_INTERVAL = 1200
 
 # configuration parameters
 DEFAULT_NAME = "HHS Vertretungsplan"
+PREFIX = "hhs"
 
 # data keys
 ATTR_DATUM = "datum"
