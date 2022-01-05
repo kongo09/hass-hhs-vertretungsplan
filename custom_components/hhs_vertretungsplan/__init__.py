@@ -86,4 +86,12 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
                 klassenliste[vertretung.klasse].append(asdict(vertretung))
             else:
                 klassenliste[vertretung.klasse] = [asdict(vertretung)]
+        return self.beautify_data(klassenliste)
+
+
+    def beautify_data(self, klassenliste: Dict) -> Dict:
+        """Make the date better readable and combine Text and Nach fields."""
+        for klasse in klassenliste.keys():
+            for vertretung in klassenliste[klasse]:
+                vertretung['datum'] = "xxx"
         return klassenliste
