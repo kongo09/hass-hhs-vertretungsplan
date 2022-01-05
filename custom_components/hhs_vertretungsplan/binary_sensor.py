@@ -74,25 +74,12 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
     def extra_state_attributes(self) -> Dict[str, Any]:
         """Store all Vertretungen in a dynamic"""
         extra_state = {}
-        vertretungen = self.coordinator.data[self._tutor_group]
-        num = 0
-        for vertretung in vertretungen:
-            key = ATTR_KEY + f"_{num}"
-            extra_state[key] = asdict(vertretung)
-            num += 1
-
-        # extra_state = {
-        #     ATTR_KLASSE: "",
-        #     ATTR_STUNDE: "",
-        #     ATTR_FACH: "",
-        #     ATTR_VERTRETER: "",
-        #     ATTR_RAUM: "",
-        #     ATTR_NACH: "",
-        #     ATTR_TEXT: ""
-        # }
-        # num = len(vertretungen)
-        # if (num >=1):
-        #     extra_state = asdict(vertretungen[0])
-        # return extra_state
+        if self._tutor_group in self.coordinator.data:
+            vertretungen = self.coordinator.data[self._tutor_group]
+            num = 0
+            for vertretung in vertretungen:
+                key = ATTR_KEY + f"_{num}"
+                extra_state[key] = asdict(vertretung)
+                num += 1
         
         return  extra_state
