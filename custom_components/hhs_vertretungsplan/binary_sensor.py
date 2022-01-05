@@ -58,9 +58,9 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
     def state(self) -> str:
         """The sensor is on, when there is a Vertretung published."""
         if self.is_on:
-            return "Notice"
+            return "Vertretung"
         else:
-            return "Nothing"
+            return "Regulär"
 
     @property
     def icon(self) -> str:
@@ -72,18 +72,27 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
 
     @property
     def extra_state_attributes(self) -> Dict[str, Any]:
-        """Only display at maximum 3 Vertretungen per tutor group."""
+        """Store all Vertretungen in a dynamic"""
+        extra_state = {}
         vertretungen = self.coordinator.data[self._tutor_group]
-        extra_state = {
-            ATTR_KLASSE: "",
-            ATTR_STUNDE: "",
-            ATTR_FACH: "",
-            ATTR_VERTRETER: "",
-            ATTR_RAUM: "",
-            ATTR_NACH: "",
-            ATTR_TEXT: ""
-        }
-        num = len(vertretungen)
-        if (num >=1):
-            extra_state = asdict(vertretungen[0])
-        return extra_state
+        num = 0
+        for vertretung in vertretungen:
+            key = ATTR_KEY + f"_{num}"
+            extra_state[key] = vertretung
+            num += 1
+
+        # extra_state = {
+        #     ATTR_KLASSE: "",
+        #     ATTR_STUNDE: "",
+        #     ATTR_FACH: "",
+        #     ATTR_VERTRETER: "",
+        #     ATTR_RAUM: "",
+        #     ATTR_NACH: "",
+        #     ATTR_TEXT: ""
+        # }
+        # num = len(vertretungen)
+        # if (num >=1):
+        #     extra_state = asdict(vertretungen[0])
+        # return extra_state
+        
+        return  extra_state
