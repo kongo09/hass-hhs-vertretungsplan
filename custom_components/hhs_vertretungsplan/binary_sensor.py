@@ -1,5 +1,6 @@
 from typing import Callable, Any, Dict
 from custom_components.hhs_vertretungsplan import HHSDataUpdateCoordinator
+from hhs_vertretungsplan_parser.vertretungsplan_parser import Vertretung
 from dataclasses import asdict
 
 from homeassistant.components.binary_sensor import BinarySensorEntity
@@ -73,13 +74,14 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
     @property
     def extra_state_attributes(self) -> Dict[str, Any]:
         """Store all Vertretungen in a dynamic"""
-        extra_state = {}
+        extra_state = {ATTR_KEY: list(Vertretung)}
         if self._tutor_group in self.coordinator.data:
-            vertretungen = self.coordinator.data[self._tutor_group]
-            num = 0
-            for vertretung in vertretungen:
-                key = ATTR_KEY + f"_{num}"
-                extra_state[key] = asdict(vertretung)
-                num += 1
+            extra_state = {ATTR_KEY: self.coordinator.data[self._tutor_group]}
+        #     vertretungen = self.coordinator.data[self._tutor_group]
+        #     num = 0
+        #     for vertretung in vertretungen:
+        #         key = ATTR_KEY + f"_{num}"
+        #         extra_state[key] = asdict(vertretung)
+        #         num += 1
         
         return  extra_state
