@@ -78,7 +78,7 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         num = 0
         for vertretung in vertretungen:
             key = ATTR_KEY + f"_{num}"
-            extra_state[key] = vertretung
+            extra_state[key] = asdict(vertretung)
             num += 1
 
         # extra_state = {
