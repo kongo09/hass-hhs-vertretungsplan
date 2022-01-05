@@ -86,7 +86,8 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
                 klassenliste[vertretung.klasse].append(asdict(vertretung))
             else:
                 klassenliste[vertretung.klasse] = [asdict(vertretung)]
-        return self.beautify_data(klassenliste)
+        return klassenliste
+        # return self.beautify_data(klassenliste)
 
 
     def beautify_data(self, klassenliste: Dict) -> Dict:
