@@ -93,11 +93,11 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         """Make the date better readable and combine Text and Nach fields."""
         for klasse in klassenliste.keys():
             for vertretung in klassenliste[klasse]:
-                vertretung['datum'] = datetime.datetime.strptime(vertretung['datum'], '%Y-%m-%d').strftime('%A, %-d. %b')
+                vertretung['datum'] = datetime.strptime(vertretung['datum'], '%Y-%m-%d').strftime('%A, %-d. %b')
                 if len(vertretung['text']) > 0:
                     if len(vertretung['nach'] > 0):
                         vertretung['text'] = ', '.join(vertretung['text'], vertretung['nach'])
                 else:
                     vertretung['text'] = vertretung['nach']
-                    
+
         return klassenliste
