@@ -76,7 +76,6 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         try:
             """Ask the library to reload fresh data."""
             await self.hhs.load_data()
-            _LOGGER.debug(f"load.data() - status={self.hhs.status}")
         except (ConnectionError, AuthenticationException) as error:
             raise UpdateFailed(error) from error
 
@@ -107,7 +106,6 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
             ATTR_VERTRETUNG: klassenliste,
             ATTR_STATUS: status
         }
-        _LOGGER.debug(f"_async_update_data: extra_states={extra_states}")
         return extra_states
 
 
