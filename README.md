@@ -104,7 +104,7 @@ cards:
 
 This results in the following card:
 
-
+![Lovelace Card](images/lovelace.png)
 
 Note, that this requires two custom frontend cards: `custom:stack-in-card` and `custom:flex-table-card` which both need to
 be installed via HACS as well. Both are part of the HACS index and can be found with the built-in search.
