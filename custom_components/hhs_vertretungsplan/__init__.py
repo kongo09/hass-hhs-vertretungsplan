@@ -103,10 +103,12 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         status = format_datetime(time, 'EEEE H:mm', locale='de')
         _LOGGER.debug(f"_asnyc_update_data: status={status}")
 
-        return {
+        extra_states = {
             ATTR_VERTRETUNG: klassenliste,
             ATTR_STATUS: status
         }
+        _LOGGER.debug(f"_async_update_data: extra_states={extra_states}")
+        return extra_states
 
 
     def beautify_data(self, klassenliste: Dict) -> Dict:
