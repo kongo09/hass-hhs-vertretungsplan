@@ -53,7 +53,7 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
 
     @property
     def is_on(self) -> bool:
-        return self._tutor_group in self.coordinator.data
+        return self._tutor_group in self.coordinator.data[ATTR_VERTRETUNG]
 
     @property
     def state(self) -> str:
