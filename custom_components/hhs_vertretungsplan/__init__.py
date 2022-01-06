@@ -76,6 +76,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         try:
             """Ask the library to reload fresh data."""
             await self.hhs.load_data()
+            _LOGGER.debug(f"load.data() - status={self.hhs.status}")
         except (ConnectionError, AuthenticationException) as error:
             raise UpdateFailed(error) from error
 
@@ -99,7 +100,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         raw_status = self.hhs.status
         time = datetime.strptime(raw_status, '%Y-%m-%d %H:%M')
         _LOGGER.debug(f"_asnyc_update_data: time={time}")
-        status = format_datetime(time, 'EEEEE H:mm', locale='de')
+        status = format_datetime(time, 'EEEE H:mm', locale='de')
         _LOGGER.debug(f"_asnyc_update_data: status={status}")
 
         return {
@@ -112,5 +113,5 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         """Add day field."""
         for klasse in klassenliste.keys():
             for vertretung in klassenliste[klasse]:
-                vertretung['day'] = format_date(datetime.strptime(vertretung['datum'], '%Y-%m-%d'), 'EEEEE', locale='de')
+                vertretung['day'] = format_date(datetime.strptime(vertretung['datum'], '%Y-%m-%d'), 'EEEE', locale='de')
         return klassenliste
