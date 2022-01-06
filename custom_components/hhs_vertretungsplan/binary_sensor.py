@@ -77,5 +77,7 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         extra_state = {ATTR_KEY: []}
         if self._tutor_group in self.coordinator.data:
             extra_state = {ATTR_KEY: self.coordinator.data[self._tutor_group]}
+        if ALLE_KEY in self.coordinator.data:
+            extra_state[ATTR_KEY].append(self.coordinator.data[ALLE_KEY])
         
         return  extra_state
