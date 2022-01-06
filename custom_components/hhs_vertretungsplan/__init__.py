@@ -95,7 +95,9 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         klassenliste = self.beautify_data(klassenliste)
 
         """Now also get the status date of the data."""
+        _LOGGER.debug(f"_asnyc_update_data: self.hhs.status={self.hhs.status}")
         status = format_date(datetime.strptime(self.hhs.status, '%Y-%m-%d %H:%M'), 'EEEEE H:mm', locale='de')
+        _LOGGER.debug(f"_asnyc_update_data: status={status}")
 
         return {
             ATTR_VERTRETUNG: klassenliste,
