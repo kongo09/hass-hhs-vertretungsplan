@@ -2,7 +2,7 @@
 from __future__ import annotations
 from typing import Dict
 from datetime import date, datetime, timedelta
-from babel.dates import format_date
+from babel.dates import format_date, format_datetime
 from dataclasses import asdict
 
 from hhs_vertretungsplan_parser.vertretungsplan_parser import AuthenticationException, HHSVertretungsplanParser
@@ -99,7 +99,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         raw_status = self.hhs.status
         time = datetime.strptime(raw_status, '%Y-%m-%d %H:%M')
         _LOGGER.debug(f"_asnyc_update_data: time={time}")
-        status = format_date(time, 'EEEEE H:mm', locale='de')
+        status = format_datetime(time, 'EEEEE H:mm', locale='de')
         _LOGGER.debug(f"_asnyc_update_data: status={status}")
 
         return {
