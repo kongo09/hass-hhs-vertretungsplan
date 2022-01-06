@@ -96,7 +96,10 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
 
         """Now also get the status date of the data."""
         _LOGGER.debug(f"_asnyc_update_data: self.hhs.status={self.hhs.status}")
-        status = format_date(datetime.strptime(self.hhs.status, '%Y-%m-%d %H:%M'), 'EEEEE H:mm', locale='de')
+        raw_status = self.hhs.status
+        time = datetime.strptime(raw_status, '%Y-%m-%d %H:%M')
+        _LOGGER.debug(f"_asnyc_update_data: time={time}")
+        status = format_date(time, 'EEEEE H:mm', locale='de')
         _LOGGER.debug(f"_asnyc_update_data: status={status}")
 
         return {
