@@ -1,7 +1,8 @@
 """The HHS Vertretungsplan component."""
 from __future__ import annotations
 from typing import Dict
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
+from babel.dates import format_date
 from dataclasses import asdict
 
 from hhs_vertretungsplan_parser.vertretungsplan_parser import AuthenticationException, HHSVertretungsplanParser
@@ -79,26 +80,32 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
             raise UpdateFailed(error) from error
 
         """Let's return the raw list of all Vertretungen."""
+        today = datetime.strftime(date.today(), '%Y-%m-%d')
         vertretungen = self.hhs.vertretungen
         klassenliste = {}
         for vertretung in vertretungen:
+            # skip old stuff before today
+            if vertretung.datum < today:
+                next
+            # add to our list
             if vertretung.klasse in klassenliste:
                 klassenliste[vertretung.klasse].append(asdict(vertretung))
             else:
                 klassenliste[vertretung.klasse] = [asdict(vertretung)]
-        return klassenliste
-        # return self.beautify_data(klassenliste)
+        klassenliste = self.beautify_data(klassenliste)
+
+        """Now also get the status date of the data."""
+        status = format_date(datetime.strptime(self.hhs.status, '%Y-%m-%d %H:%M'), 'EEEEE H:mm', locale='de')
+
+        return {
+            ATTR_VERTRETUNG: klassenliste,
+            ATTR_STATUS: status
+        }
 
 
     def beautify_data(self, klassenliste: Dict) -> Dict:
-        """Make the date better readable and combine Text and Nach fields."""
+        """Add day field."""
         for klasse in klassenliste.keys():
             for vertretung in klassenliste[klasse]:
-                vertretung['datum'] = datetime.strptime(vertretung['datum'], '%Y-%m-%d').strftime('%A, %-d. %b')
-                if len(vertretung['text']) > 0:
-                    if len(vertretung['nach']) > 0:
-                        vertretung['text'] = vertretung['text'] + ", " + vertretung['nach']
-                else:
-                    vertretung['text'] = vertretung['nach']
-
+                vertretung['day'] = format_date(datetime.strptime(vertretung['datum'], '%Y-%m-%d'), 'EEEEE', locale='de')
         return klassenliste

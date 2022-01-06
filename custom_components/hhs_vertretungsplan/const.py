@@ -1,3 +1,6 @@
+from typing import final
+
+
 DOMAIN = "hhs_vertretungsplan"
 PLATFORMS = ["binary_sensor"]
 DATA_CONFIG_ENTRY = "config_entry"
@@ -14,13 +17,7 @@ DEFAULT_NAME = "HHS Vertretungsplan"
 PREFIX = "hhs"
 
 # data keys
-# ATTR_DATUM = "datum"
-# ATTR_KLASSE = "klasse"
-# ATTR_STUNDE = "stunde"
-# ATTR_VERTRETER = "vertreter"
-# ATTR_FACH = "fach"
-# ATTR_RAUM = "raum"
-# ATTR_TEXT = "text"
-# ATTR_NACH = "nach"
-ATTR_KEY = "vertretung"
+ATTR_VERTRETUNG: final = "vertretung"
+ATTR_STATUS: final = "status"
+
 ALLE_KEY = "alle"
