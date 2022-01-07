@@ -75,36 +75,54 @@ mode: vertical
 cards:
   - type: entities
     entities:
+      - type: custom:template-entity-row
+        entity: binary_sensor.hhs_7f
+        color: |-
+          {% if is_state(config.entity, 'Vertretung') %}
+            #FDD835
+          {% endif %}
+        secondary: >-
+          Status von  {{ as_timestamp(state_attr(config.entity, 'last_update'))
+          | timestamp_custom('%-H:%M Uhr am %A') }}
+  - type: conditional
+    conditions:
       - entity: binary_sensor.hhs_7f
-        type: attribute
-        attribute: status
-  - type: custom:flex-table-card
-    entities:
-      include: binary_sensor.hhs_7f
-    columns:
-      - data: vertretung
-        modify: x.day
-        name: Tag
-      - data: vertretung
-        modify: x.stunde
-        name: Stunde
-      - data: vertretung
-        modify: x.fach
-        name: Fach
-      - data: vertretung
-        modify: x.vertreter
-        name: Vertr.
-      - data: vertretung
-        modify: x.raum
-        name: Raum
-      - data: vertretung
-        modify: '[x.text, x.nach].filter(Boolean).join('', '')'
-        name: Info
+        state: Vertretung
+    card:
+      type: custom:flex-table-card
+      entities:
+        include: binary_sensor.hhs_7f
+      columns:
+        - data: vertretung
+          modify: >-
+            var days = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag',
+            'Freitag', 'Samstag', 'Sonntag'];
+
+            var d = new Date(x.datum).getDay();
+
+            days[d-1]
+          name: Tag
+        - data: vertretung
+          modify: x.stunde
+          name: Stunde
+        - data: vertretung
+          modify: x.fach
+          name: Fach
+        - data: vertretung
+          modify: x.vertreter
+          name: Vertr.
+        - data: vertretung
+          modify: x.raum
+          name: Raum
+        - data: vertretung
+          modify: '[x.text, x.nach].filter(Boolean).join('', '')'
+          name: Info
+
 ```
 
 This results in the following card:
 
 ![Lovelace Card](images/lovelace.png)
 
-Note, that this requires two custom frontend cards: `custom:stack-in-card` and `custom:flex-table-card` which both need to
-be installed via HACS as well. Both are part of the HACS index and can be found with the built-in search.
+Note, that this requires two custom frontend cards: `custom:stack-in-card`, `custom:template-entity-row` and `custom:flex-table-card`
+which need to be installed via HACS as well. They are part of the HACS index and can be found with the built-in search.
