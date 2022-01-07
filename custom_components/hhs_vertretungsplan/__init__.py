@@ -1,7 +1,7 @@
 """The HHS Vertretungsplan component."""
 from __future__ import annotations
 from typing import Dict
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from babel.dates import format_date, format_datetime
 from dataclasses import asdict
 
@@ -85,7 +85,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
             raise UpdateFailed(error) from error
 
         """Let's return the raw list of all Vertretungen."""
-        today = datetime.strftime(date.today(), '%Y-%m-%d')
+        today = datetime.now().astimezone().replace(microsecond=0).isoformat()
         vertretungen = self.hhs.vertretungen
         klassenliste = {}
         for vertretung in vertretungen:
@@ -99,17 +99,10 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
                 klassenliste[vertretung.klasse] = [asdict(vertretung)]
         klassenliste = self.beautify_data(klassenliste)
 
-        """Now also get the status date of the data."""
-        _LOGGER.debug(f"_asnyc_update_data: self.hhs.status={self.hhs.status}")
-        raw_status = self.hhs.status
-        time = datetime.strptime(raw_status, '%Y-%m-%d %H:%M')
-        _LOGGER.debug(f"_asnyc_update_data: time={time}")
-        status = format_datetime(time, 'EEEE, H:mm', locale='de')
-        _LOGGER.debug(f"_asnyc_update_data: status={status}")
-
+        """Now put it all together."""
         extra_states = {
             ATTR_VERTRETUNG: klassenliste,
-            ATTR_STATUS: status
+            ATTR_STATUS: self.hhs.status
         }
         return extra_states
 
