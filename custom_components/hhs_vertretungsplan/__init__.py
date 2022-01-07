@@ -104,7 +104,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         raw_status = self.hhs.status
         time = datetime.strptime(raw_status, '%Y-%m-%d %H:%M')
         _LOGGER.debug(f"_asnyc_update_data: time={time}")
-        status = format_datetime(time, 'EEEE H:mm', locale='de')
+        status = format_datetime(time, 'EEEE, H:mm', locale='de')
         _LOGGER.debug(f"_asnyc_update_data: status={status}")
 
         extra_states = {
