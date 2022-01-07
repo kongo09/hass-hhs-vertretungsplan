@@ -20,6 +20,11 @@ import logging
 _LOGGER = logging.getLogger(__name__)
 
 
+async def async_setup(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    hass.data[DOMAIN] = dict()
+    return True
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Setup HHS Vertretungsplan from a config entry."""
 
