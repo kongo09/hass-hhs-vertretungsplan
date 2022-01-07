@@ -43,9 +43,9 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         # attributes
         self._attr_state_class = "measurement"
         self._attr_entity_category = "diagnostic"
-        self._attr_name = PREFIX + " " + self._tutor_group
-        self._attr_friendly_name = self._tutor_group
+        self._attr_name = self._tutor_group
         self._attr_unique_id = self._tutor_group
+        self.entity_id = "." + PREFIX + self._tutor_group
     
     @property
     def available(self) -> bool:
