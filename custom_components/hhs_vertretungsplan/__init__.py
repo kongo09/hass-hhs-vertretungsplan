@@ -91,7 +91,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         for vertretung in vertretungen:
             # skip old stuff before today
             if vertretung.datum < today:
-                next
+                continue
             # add to our list
             if vertretung.klasse in klassenliste:
                 klassenliste[vertretung.klasse].append(asdict(vertretung))
