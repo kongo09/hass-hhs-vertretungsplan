@@ -19,4 +19,4 @@ PREFIX = "hhs"
 
 # data keys
 ATTR_VERTRETUNG = "vertretung"
-ATTR_STATUS = "last_update"
+ATTR_STATUS = "last_updated"
