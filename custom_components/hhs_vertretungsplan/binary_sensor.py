@@ -1,6 +1,6 @@
 from typing import Callable, Any, Dict
 from custom_components.hhs_vertretungsplan import HHSDataUpdateCoordinator
-# from hhs_vertretungsplan_parser.vertretungsplan_parser import ALLE_KEY
+from hhs_vertretungsplan_parser.const import KEY_ALLE
 from dataclasses import asdict
 
 from homeassistant.components.binary_sensor import BinarySensorEntity
@@ -41,6 +41,7 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         self._tutor_group = self._config.data[CONF_TUTOR_GROUP]
 
         # attributes
+        self._attr_attributeion = ATTRIBUTION
         self._attr_state_class = "measurement"
         self._attr_entity_category = "diagnostic"
         self._attr_name = self._tutor_group
@@ -79,8 +80,8 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         vertretungen = self.coordinator.data[ATTR_VERTRETUNG]
         if self._tutor_group in vertretungen:
             vertretung_state = vertretungen[self._tutor_group]
-        if ALLE_KEY in vertretungen:
-            vertretung_state.extend(vertretungen[ALLE_KEY])
+        if KEY_ALLE in vertretungen:
+            vertretung_state.extend(vertretungen[KEY_ALLE])
         
         return  {
             ATTR_STATUS: self.coordinator.data[ATTR_STATUS],

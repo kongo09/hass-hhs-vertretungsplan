@@ -4,6 +4,7 @@ from typing import final
 DOMAIN = "hhs_vertretungsplan"
 PLATFORMS = ["binary_sensor"]
 DATA_CONFIG_ENTRY = "config_entry"
+ATTRIBUTION = "Data provided by Heinrich-Hertz-Schule, Hamburg"
 
 CONF_TUTOR_GROUP = "tutor_group"
 CONF_USER = "user"
@@ -17,7 +18,5 @@ DEFAULT_NAME = "HHS Vertretungsplan"
 PREFIX = "hhs"
 
 # data keys
-ATTR_VERTRETUNG: final = "vertretung"
-ATTR_STATUS: final = "status"
-
-ALLE_KEY = "alle"
+ATTR_VERTRETUNG = "vertretung"
+ATTR_STATUS = "status"
