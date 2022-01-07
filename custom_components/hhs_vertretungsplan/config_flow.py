@@ -56,7 +56,7 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 tutor_group = re.sub('\s', '', tutor_group)
                 if len(tutor_group) == 0:
                     raise TutorGroupError
-                user_input[CONF_TUTOR_GROUP] = tutor_group.lower
+                user_input[CONF_TUTOR_GROUP] = tutor_group.lower()
 
                 # let's try and connect to HHS
                 session = async_get_clientsession(self.hass)
