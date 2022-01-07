@@ -1,12 +1,12 @@
 from typing import Callable, Any, Dict
 from custom_components.hhs_vertretungsplan import HHSDataUpdateCoordinator
 from hhs_vertretungsplan_parser.const import KEY_ALLE
-from dataclasses import asdict
 
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.helpers.typing import HomeAssistantType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.util import slugify
 
 import logging
 
@@ -46,7 +46,7 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         self._attr_entity_category = "diagnostic"
         self._attr_name = self._tutor_group
         self._attr_unique_id = self._tutor_group
-        self.entity_id = "." + PREFIX + self._tutor_group
+        self.entity_id = "." + slugify(PREFIX + "_" + self._tutor_group)
     
     @property
     def available(self) -> bool:
