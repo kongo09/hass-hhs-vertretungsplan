@@ -90,6 +90,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         klassenliste = {}
         for vertretung in vertretungen:
             # skip old stuff before today
+            _LOGGER.debug(f"comparing {vertretung.datum} with {today}")
             if vertretung.datum < today:
                 continue
             # add to our list
