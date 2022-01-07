@@ -91,7 +91,6 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         klassenliste = {}
         for vertretung in vertretungen:
             # skip old stuff before today
-            _LOGGER.debug(f"comparing {vertretung.datum} with {today}")
             if vertretung.datum < today:
                 continue
             # add to our list
@@ -99,7 +98,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
                 klassenliste[vertretung.klasse].append(asdict(vertretung))
             else:
                 klassenliste[vertretung.klasse] = [asdict(vertretung)]
-        # klassenliste = self.beautify_data(klassenliste)
+        klassenliste = self.beautify_data(klassenliste)
 
         """Now put it all together."""
         extra_states = {
@@ -110,8 +109,9 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
 
 
     def beautify_data(self, klassenliste: Dict) -> Dict:
+        """This is just a hack, as the frontend struggles with showing just a German day name."""
         """Add day field."""
         for klasse in klassenliste.keys():
             for vertretung in klassenliste[klasse]:
-                vertretung['day'] = format_date(datetime.strptime(vertretung['datum'], '%Y-%m-%d'), 'EEEE', locale='de')
+                vertretung['tag'] = format_date(datetime.fromisoformat(vertretung['datum']), 'EEEE', locale='de')
         return klassenliste
