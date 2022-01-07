@@ -13,6 +13,7 @@ from typing import Any
 
 import logging
 import voluptuous as vol
+import re
 
 from .const import CONF_PASS, CONF_TUTOR_GROUP, CONF_USER, DEFAULT_NAME, DOMAIN, PREFIX
 
@@ -48,6 +49,15 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         # user input was provided, so check and save it
         if user_input is not None:
             try:
+                # let's check the tutor group first and normalize
+                tutor_group = user_input[CONF_TUTOR_GROUP]
+                if tutor_group == None:
+                    raise TutorGroupError
+                tutor_group = re.sub('\s', '', tutor_group)
+                if len(tutor_group) == 0:
+                    raise TutorGroupError
+                user_input[CONF_TUTOR_GROUP] = tutor_group.lower
+
                 # let's try and connect to HHS
                 session = async_get_clientsession(self.hass)
                 user = user_input[CONF_USER]
@@ -58,13 +68,14 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 await self.hhs.load_data()
 
                 # use the tutor_group as unique_id
-                unique_id = DOMAIN + "_" + user_input[CONF_TUTOR_GROUP].strip()
+                unique_id = user_input[CONF_TUTOR_GROUP]
+                _LOGGER.debug(f"async_step_user: unique_id={unique_id}")
 
                 # set the unique id for the entry, abort if it already exists
                 await self.async_set_unique_id(unique_id)
                 self._abort_if_unique_id_configured()
 
-                # compile a name from model and serial
+                # compile a name and return the config entry
                 return self.async_create_entry(
                     title=PREFIX + " " + user_input[CONF_TUTOR_GROUP],
                     data=user_input
@@ -72,6 +83,8 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             except (ConnectionError, ClientConnectorError, AuthenticationException) as e:
                 errors['base'] = "authentication"
+            except TutorGroupError:
+                errors[CONF_TUTOR_GROUP] = "tutor_group"
 
         if user_input is None:
             user_input = {}
@@ -82,3 +95,6 @@ class HHSVertretungsplanConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         # show the form to the user
         return self.async_show_form(step_id="user", data_schema=schema, errors=errors)
+
+class TutorGroupError(Exception):
+    pass

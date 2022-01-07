@@ -12,7 +12,8 @@
       }
     },
     "error": {
-      "authentication": "Account data is wrong"
+      "authentication": "Account data is wrong",
+      "tutor_group": "Empty tutor group"
     }
   }
 }
