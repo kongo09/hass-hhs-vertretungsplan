@@ -97,7 +97,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
                 klassenliste[vertretung.klasse].append(asdict(vertretung))
             else:
                 klassenliste[vertretung.klasse] = [asdict(vertretung)]
-        klassenliste = self.beautify_data(klassenliste)
+        # klassenliste = self.beautify_data(klassenliste)
 
         """Now put it all together."""
         extra_states = {
