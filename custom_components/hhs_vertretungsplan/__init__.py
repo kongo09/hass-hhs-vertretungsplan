@@ -81,6 +81,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         try:
             """Ask the library to reload fresh data."""
             await self.hhs.load_data()
+            _LOGGER.debug(f"data loaded")
         except (ConnectionError, AuthenticationException) as error:
             raise UpdateFailed(error) from error
 
@@ -88,6 +89,8 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         today = datetime.now().astimezone().replace(microsecond=0).isoformat()
         vertretungen = self.hhs.vertretungen
         klassenliste = {}
+        _LOGGER.debug(f"now looping over vertretungen")
+        _LOGGER.debug(f"vertretungen = {vertretungen}")
         for vertretung in vertretungen:
             # skip old stuff before today
             _LOGGER.debug(f"comparing {vertretung.datum} with {today}")
