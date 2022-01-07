@@ -86,11 +86,9 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
             raise UpdateFailed(error) from error
 
         """Let's return the raw list of all Vertretungen."""
-        today = datetime.now().astimezone().replace(microsecond=0).isoformat()
+        today = datetime.now().astimezone().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
         vertretungen = self.hhs.vertretungen
         klassenliste = {}
-        _LOGGER.debug(f"now looping over vertretungen")
-        _LOGGER.debug(f"vertretungen = {vertretungen}")
         for vertretung in vertretungen:
             # skip old stuff before today
             _LOGGER.debug(f"comparing {vertretung.datum} with {today}")
