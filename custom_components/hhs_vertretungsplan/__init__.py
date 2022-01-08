@@ -92,9 +92,9 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         except (Exception) as error:
             # in case something goes wrong with date/time parsing, we just update the data and continue
             _LOGGER.error(f"Error occured with time parsing and comparison on update: {error}\n"
-                           "Start and end times should be in format 'HH:MM'.\n"
-                           "Configured are POLLING_START={POLLING_START} and POLLING_END={POLLING_END}\n"
-                           "Please inform the maintainer of the integration.")
+                          f"Start and end times should be in format 'HH:MM'.\n"
+                          f"Configured are POLLING_START={POLLING_START} and POLLING_END={POLLING_END}\n"
+                          f"Please inform the maintainer of the integration.")
             pass
 
         try:
