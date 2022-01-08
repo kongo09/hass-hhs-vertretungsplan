@@ -82,10 +82,10 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         """Only update in time window."""
         # todo: allow forced update
         try:
-            now = datetime.now().astimezone().replace(year=0, month=0, day=0, second=0, microsecond=0).isoformat()
-            start = datetime.strptime(POLLING_START, '%H:%M').isoformat()
+            now = datetime.now().time()
+            start = datetime.strptime(POLLING_START, '%H:%M').time()
             _LOGGER.debug(f"start={start}")
-            end = datetime.strptime(POLLING_END, '%H:%M').isoformat()
+            end = datetime.strptime(POLLING_END, '%H:%M').time()
             _LOGGER.debug(f"end={end}")
             if self.data is not None and (now < start or now > end):
                 _LOGGER.debug(f"Time is outside polling window, skipping update")
