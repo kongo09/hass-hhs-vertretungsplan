@@ -83,16 +83,18 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         try:
             now = datetime.now().astimezone().replace(year=0, month=0, day=0, second=0, microsecond=0).isoformat()
             start = datetime.strptime(POLLING_START, '%H:%M').isoformat()
+            _LOGGER.debug(f"start={start}")
             end = datetime.strptime(POLLING_END, '%H:%M').isoformat()
+            _LOGGER.debug(f"end={end}")
             if self.data is not None and (now < start or now > end):
                 _LOGGER.debug(f"Time is outside polling window, skipping update")
                 return self.data
         except (Exception) as error:
             # in case something goes wrong with date/time parsing, we just update the data and continue
-            _LOGGER.error(f"Error occured with time parsing and comparison on update: {error}")
-            _LOGGER.error(f"Start and end times should be in format 'HH:MM'.")
-            _LOGGER.error(f"Configured are POLLING_START={POLLING_START} and POLLING_END={POLLING_END}")
-            _LOGGER.error(f"Please inform the maintainer of the integration.")
+            _LOGGER.error(f"Error occured with time parsing and comparison on update: {error}\n"
+                           "Start and end times should be in format 'HH:MM'.\n"
+                           "Configured are POLLING_START={POLLING_START} and POLLING_END={POLLING_END}\n"
+                           "Please inform the maintainer of the integration.")
             pass
 
         try:
