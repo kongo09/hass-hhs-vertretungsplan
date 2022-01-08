@@ -77,6 +77,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self) -> Dict:
         """Update data via library."""
+        _LOGGER.debug(f"_async_update_data() called")
 
         """Only update in time window."""
         # todo: allow forced update
