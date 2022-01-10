@@ -87,7 +87,8 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         ]
         vertretungen = self.coordinator.data[ATTR_VERTRETUNG]
         _LOGGER.debug(f"before adding: len(vertretung_state) = {len(vertretung_state)}")
-        vertretung_state = [vertretungen[x] for x in selection]
+        vertretung_state = [vertretungen[x] for x in selection if x in vertretungen.keys()]
+
         _LOGGER.debug(f"after adding: len(vertretung_state) = {len(vertretung_state)}")
 
         return  {
