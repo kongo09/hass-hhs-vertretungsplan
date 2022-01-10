@@ -79,16 +79,20 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         vertretung_state = {}
         vertretungen = self.coordinator.data[ATTR_VERTRETUNG]
         if self._tutor_group in vertretungen:
+            _LOGGER.debug(f"before adding {self._tutor_group}: len(vertretung_state) = {len(vertretung_state)}")
             vertretung_state = vertretungen[self._tutor_group]
+            _LOGGER.debug(f"after adding {self._tutor_group}: len(vertretung_state) = {len(vertretung_state)}")
 
         # add catch-all items for the whole year
         year = ''.join(filter(str.isdigit, self._tutor_group)) + KEY_ALLE
         if year in vertretungen:
             vertretung_state.extend(vertretungen[year])
+            _LOGGER.debug(f"after adding {year}: len(vertretung_state) = {len(vertretung_state)}")
 
         # add catch-all items for the whole school
         if KEY_ALLE in vertretungen:
             vertretung_state.extend(vertretungen[KEY_ALLE])
+            _LOGGER.debug(f"after adding {KEY_ALLE}: len(vertretung_state) = {len(vertretung_state)}")
         
         return  {
             ATTR_STATUS: self.coordinator.data[ATTR_STATUS],
