@@ -76,7 +76,7 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
     @property
     def extra_state_attributes(self) -> Dict[str, Any]:
         """Store all Vertretungen in a dynamic"""
-        vertretung_state = {}
+        vertretung_state = []
 
         # define selecting keys
         year = ''.join(filter(str.isdigit, self._tutor_group)) + KEY_ALLE
