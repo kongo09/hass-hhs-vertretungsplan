@@ -84,9 +84,7 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
         try:
             now = datetime.now().time()
             start = datetime.strptime(POLLING_START, '%H:%M').time()
-            _LOGGER.debug(f"start={start}")
             end = datetime.strptime(POLLING_END, '%H:%M').time()
-            _LOGGER.debug(f"end={end}")
             if self.data is not None and (now < start or now > end):
                 _LOGGER.debug(f"Time is outside polling window, skipping update")
                 return self.data
@@ -124,4 +122,5 @@ class HHSDataUpdateCoordinator(DataUpdateCoordinator):
             ATTR_VERTRETUNG: klassenliste,
             ATTR_STATUS: self.hhs.status
         }
+        _LOGGER.debug(f"Status as of {self.hhs.status}")
         return extra_states

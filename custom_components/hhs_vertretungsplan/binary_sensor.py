@@ -41,7 +41,7 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         self._tutor_group = self._config.data[CONF_TUTOR_GROUP]
 
         # attributes
-        self._attr_attributeion = ATTRIBUTION
+        self._attr_attribution = ATTRIBUTION
         self._attr_state_class = "measurement"
         self._attr_entity_category = "diagnostic"
         self._attr_name = self._tutor_group
@@ -80,6 +80,13 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         vertretungen = self.coordinator.data[ATTR_VERTRETUNG]
         if self._tutor_group in vertretungen:
             vertretung_state = vertretungen[self._tutor_group]
+
+        # add catch-all items for the whole year
+        year = ''.join(filter(str.isdigit, self.tutor_group)) + KEY_ALLE
+        if year in vertretungen:
+            vertretung_state.extend(vertretungen[year])
+
+        # add catch-all items for the whole school
         if KEY_ALLE in vertretungen:
             vertretung_state.extend(vertretungen[KEY_ALLE])
         
