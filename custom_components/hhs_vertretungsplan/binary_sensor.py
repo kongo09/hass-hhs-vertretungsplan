@@ -82,7 +82,7 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
             vertretung_state = vertretungen[self._tutor_group]
 
         # add catch-all items for the whole year
-        year = ''.join(filter(str.isdigit, self.tutor_group)) + KEY_ALLE
+        year = ''.join(filter(str.isdigit, self._tutor_group)) + KEY_ALLE
         if year in vertretungen:
             vertretung_state.extend(vertretungen[year])
 
