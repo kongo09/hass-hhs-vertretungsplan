@@ -46,7 +46,7 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         self._attr_entity_category = "diagnostic"
         self._attr_name = self._tutor_group
         self._attr_unique_id = self._tutor_group
-        self.entity_id = "." + slugify(PREFIX + "_" + self._tutor_group)
+        self.entity_id = "binary_sensor." + slugify(PREFIX + "_" + self._tutor_group)
     
     @property
     def available(self) -> bool:
