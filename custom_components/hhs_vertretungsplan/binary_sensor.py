@@ -4,6 +4,7 @@ from hhs_vertretungsplan_parser.const import KEY_ALLE
 
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.helpers.typing import HomeAssistantType
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.util import slugify
@@ -43,7 +44,7 @@ class VertretungsStatus(CoordinatorEntity, BinarySensorEntity):
         # attributes
         self._attr_attribution = ATTRIBUTION
         self._attr_state_class = "measurement"
-        self._attr_entity_category = "diagnostic"
+        self._attr_entity_category = EntityCategory.DIAGNOSTIC
         self._attr_name = self._tutor_group
         self._attr_unique_id = self._tutor_group
         self.entity_id = "binary_sensor." + slugify(PREFIX + "_" + self._tutor_group)
