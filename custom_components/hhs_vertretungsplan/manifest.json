@@ -1,12 +1,12 @@
 {
   "domain": "hhs_vertretungsplan",
   "name": "HHS Vertretungsplan",
-  "documentation": "https://github.com/kongo09/hass-hhs-vertretungsplan",
-  "issue_tracker": "https://github.com/kongo09/hass-hhs-vertretungsplan/issues",
   "codeowners": ["@kongo09"],
-  "requirements": ["hhs-vertretungsplan-parser==0.1.4"],
-  "dependencies": ["Babel"],
-  "iot_class": "cloud_polling",
   "config_flow": true,
+  "dependencies": ["babel"],
+  "documentation": "https://github.com/kongo09/hass-hhs-vertretungsplan",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/kongo09/hass-hhs-vertretungsplan/issues",
+  "requirements": ["hhs-vertretungsplan-parser==0.1.4"],
   "version": "0.1.7"
 }
