@@ -3,10 +3,9 @@
   "name": "HHS Vertretungsplan",
   "codeowners": ["@kongo09"],
   "config_flow": true,
-  "dependencies": ["babel"],
   "documentation": "https://github.com/kongo09/hass-hhs-vertretungsplan",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/kongo09/hass-hhs-vertretungsplan/issues",
-  "requirements": ["hhs-vertretungsplan-parser==0.1.4"],
+  "requirements": ["hhs-vertretungsplan-parser==0.1.4", "babel"],
   "version": "0.1.7"
 }
