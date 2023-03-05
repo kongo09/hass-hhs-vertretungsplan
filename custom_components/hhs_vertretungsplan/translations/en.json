@@ -3,7 +3,6 @@
   "config": {
     "step": {
       "user": {
-        "title": "HHS Vertretungsplan",
         "data": {
           "tutor_group": "Tutor group",
           "user": "User name",
